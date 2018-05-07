@@ -2,16 +2,13 @@ import EventEmitter from 'events';
 import fs from 'fs';
 import csvjson from 'csvjson';
 
-const DIR_CHANGED = 'dirwatcher:changed';
-
-class Importer extends EventEmitter {
+class Importer {
   constructor(emitter) {
-    super();
     this.emitter = emitter;
   }
 
   subscribeOnImport(path) {
-    this.emitter.on(DIR_CHANGED, file => {
+    this.emitter.on(this.emitter.nameForChanging, file => {
       this.import(`${path}/${file}`)
         .then(result => console.log(result))
         .catch(error => console.log(error));

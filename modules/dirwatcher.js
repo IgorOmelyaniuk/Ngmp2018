@@ -2,9 +2,11 @@ import EventEmitter from 'events';
 import fs from 'fs';
 import path from 'path';
 
-const DIR_CHANGED = 'dirwatcher:changed';
-
 class Dirwatcher extends EventEmitter {
+  static get nameForChanging() {
+    return 'dirwatcher:changed';
+  }
+
   watch(path, delay) {
     let files = [];
     
@@ -15,7 +17,7 @@ class Dirwatcher extends EventEmitter {
         if (files.length < result.length) {
           let newFiles = result.filter(file => !files.includes(file));
           files = result;
-          newFiles.forEach(file => this.emit(DIR_CHANGED, file));
+          newFiles.forEach(file => this.emit(this.nameForChanging, file));
         }
 
         if (files.length > result.length) {

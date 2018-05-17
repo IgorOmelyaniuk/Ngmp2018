@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app --exec babel-node",
+    "start": "nodemon --require babel-core/register app",
     "test": "test"
   },
   "keywords": [],
@@ -16,5 +16,8 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
     "nodemon": "^1.17.3"
+  },
+  "dependencies": {
+    "csvjson": "^5.0.0"
   }
 }

@@ -4,7 +4,8 @@
     "alias": {
       "action": "a",
       "file": "f",
-      "help": "h"
+      "help": "h",
+      "path": "p"
     }
   }
 }

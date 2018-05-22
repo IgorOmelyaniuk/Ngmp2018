@@ -52,6 +52,27 @@ const actionHandlers = {
     const stringify = csvjson.stream.stringify();
     readStream.pipe(json).pipe(stringify).pipe(writeStream);
   },
+
+  cssBundler(dirPath) {
+    const writer = fs.createWriteStream(path.join(dirPath, 'bundle.css'));
+
+    fs.readdir(dirPath, (err, files) => {
+      if (err) throw err;
+
+      if (files.length) {
+        const cssFiles = files.filter(file => file.match(/.css/));
+
+        cssFiles.forEach(file => {
+          fs.readFile(path.join(dirPath, file), 'utf-8', (err, data) => {
+            if (err) throw err;
+            writer.write(`${data}\n`);
+          })
+        })
+      } else {
+        console.log('Directory is empty');
+      }
+    });
+  }
 }
 
 const showErrorMsg = msg => {
@@ -87,6 +108,11 @@ const streamConsole = args => {
 
   if (!action) {
     showErrorMsg('Action does not exist');
+  }
+
+  if (args.p) {
+    action(path.join(__dirname, args.p))
+    return;
   }
 
   if (args.f) {

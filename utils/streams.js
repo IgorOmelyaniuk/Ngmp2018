@@ -66,16 +66,16 @@ const actionHandlers = {
           fs.readFile(path.join(dirPath, file), 'utf-8', (err, data) => {
             if (err) throw err;
             writer.write(`${data}\n`);
-          })
-        })
+          });
+        });
       } else {
-        console.log('Directory is empty');
+        showMsg('Directory is empty');
       }
     });
   }
 }
 
-const showErrorMsg = msg => {
+const showMsg = msg => {
   console.log(msg);
   process.exit()
 }
@@ -91,33 +91,30 @@ const streamConsole = args => {
   const action = actionHandlers[args.a];
 
   if (indexHelp === 1 || keys.length === 1) {
-    showErrorMsg('Options: \n -a, --action - start action \n -h, --help - show all commands \n -f, --file - select file');
+    showMsg('Options: \n -a, --action - start action \n -h, --help - show all commands \n -f, --file - select file');
   }
 
   if (args.a === 'outputFile' || args.a === 'convertFromFile' || args.a === 'convertToFile') {
     if (indexFile < 0) {
-      showErrorMsg('Action requires file as argument');
+      showMsg('Action requires file as argument');
     } else if (indexFile < indexAction) {
-      showErrorMsg('Invalid argument order');
+      showMsg('Invalid argument order');
     }
   }
 
   if (indexAction < 0) {
-    showErrorMsg('You should specify action');
+    showMsg('You should specify action');
   }
 
   if (!action) {
-    showErrorMsg('Action does not exist');
+    showMsg('Action does not exist');
   }
 
   if (args.p) {
     action(path.join(__dirname, args.p))
-    return;
-  }
-
-  if (args.f) {
+  } else if (args.f) {
     const filePath = path.join(__dirname, args.f);
-    fs.existsSync(path) ? action(filePath) : showErrorMsg('File does not exist');
+    fs.existsSync(path) ? action(filePath) : showMsg('File does not exist');
   } else {
     action();
   }  

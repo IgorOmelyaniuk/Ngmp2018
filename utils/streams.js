@@ -42,7 +42,7 @@ const actionHandlers = {
     readStream.on('end', () => {
       const json = csvjson.toObject(result);
       process.stdout.write(JSON.stringify(json));
-    })
+    });
   },
 
   convertToFile(path) {
@@ -81,13 +81,15 @@ const showMsg = msg => {
 }
 
 const args = minimist(process.argv.slice(2), config.minimistOptions);
-
+console.log(args)
 const streamConsole = args => {
   const keys = Object.keys(args);
 
-  const indexHelp = keys.findIndex(key => key === 'help' || key === 'h');
-  const indexAction = keys.findIndex(key => key === 'action' || key === 'a');
-  const indexFile = keys.findIndex(key => key === 'file' || key === 'f');
+  const indexHelp = keys.findIndex(key => key === 'h' || key === 'help');
+  const indexAction = keys.findIndex(key => key === 'a' || key === 'action');
+  const indexFile = keys.findIndex(key => key === 'f' || key === 'file');
+  const indexPath = keys.findIndex(key => key === 'p' || key === 'path');
+
   const action = actionHandlers[args.a];
 
   if (indexHelp === 1 || keys.length === 1) {
@@ -110,11 +112,15 @@ const streamConsole = args => {
     showMsg('Action does not exist');
   }
 
+  if (args.a === 'cssBundler' && indexPath < 0) {
+    showMsg('Action requires path as argument');
+  }
+
   if (args.p) {
-    action(path.join(__dirname, args.p))
+    action(path.join(__dirname, args.p));
   } else if (args.f) {
     const filePath = path.join(__dirname, args.f);
-    fs.existsSync(path) ? action(filePath) : showMsg('File does not exist');
+    fs.existsSync(filePath) ? action(filePath) : showMsg('File does not exist');
   } else {
     action();
   }  

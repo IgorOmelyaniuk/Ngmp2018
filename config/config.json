@@ -1,3 +1,11 @@
 {
-  "name": "Node.js Homework Application"
+  "name": "Node.js Homework Application",
+  "minimistOptions": {
+    "alias": {
+      "action": "a",
+      "file": "f",
+      "help": "h",
+      "path": "p"
+    }
+  }
 }

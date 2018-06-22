@@ -1,10 +1,12 @@
+import stringParser from '../helpers/stringParser';
+
 const cookieParser = () => (req, res, next) => {
-  const { cookies } = req.headers;
+  const { cookie } = req.headers;
 
-  if (!cookies) return next();
+  if (!cookie) return next();
 
-  req.parsedCookies = cookies;
-
+  req.parsedCookie = stringParser(cookie, ';');
+  console.log(req.parsedCookie);
   return next();
 }
 

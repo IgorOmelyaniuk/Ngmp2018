@@ -1,10 +1,12 @@
+import stringParser from '../helpers/stringParser';
+
 const queryParser = () => (req, res, next) => {
-  const { query } = req;
+  const url = req.url.slice(2);
 
-  if (!query) return next();
+  if (!url) return next();
 
-  req.parsedQuery = query;
-
+  req.parsedQuery = stringParser(url, '&');
+  console.log(req.parsedQuery);
   return next();
 }
 

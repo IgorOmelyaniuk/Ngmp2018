@@ -20,6 +20,7 @@
     "through2": "^2.0.3"
   },
   "dependencies": {
-    "csvjson": "^5.0.0"
+    "csvjson": "^5.0.0",
+    "express": "^4.16.3"
   }
 }

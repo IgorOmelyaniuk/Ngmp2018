@@ -26,3 +26,22 @@ export const signin = (req, res) => {
     });
   }
 }
+
+export const useLocalStrategy = (req, res) => {
+  res.send('Local Strategy');
+};
+
+export const useFacebookStrategy = (req, res) => {
+  passport.authenticate('facebook'),
+  (req, res) => res.send('Facebook Strategy');
+}
+
+export const useTwitterStrategy = (req, res) => {
+  passport.authenticate('twitter'),
+  (req, res) => res.send('Twitter Strategy');
+}
+
+export const useGoogleStrategy = (req, res) => {
+  passport.authenticate('google'),
+  (req, res) => res.send('Google Strategy');
+}

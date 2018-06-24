@@ -6,7 +6,6 @@ const cookieParser = () => (req, res, next) => {
   if (!cookie) return next();
 
   req.parsedCookie = stringParser(cookie, ';');
-  console.log(req.parsedCookie);
   return next();
 }
 

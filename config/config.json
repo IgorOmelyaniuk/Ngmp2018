@@ -7,5 +7,28 @@
       "help": "h",
       "path": "p"
     }
-  }
+  },
+  "strategies": {
+    "twitter": {
+      "consumerKey": "MiopzfIjkos4or6NvovL32zjv",
+      "consumerSecret": "7IwseVUO3G5wSUktyPQ5ILAwHjhm018nXXFijSWtqzysVf9q0q",
+      "callbackURL": "http://127.0.0.1:8080/api/auth/twitter/callback"
+    },
+    "facebook": {
+      "clientID": "1562053807237188",
+      "clientSecret": "b6c390b217dabaa557280a01fb720c68",
+      "callbackURL": "http://localhost:8080/api/auth/facebook/callback"
+    },
+    "google": {
+      "clientID": "198695213845-90r958kv231gq0a359u93fcrghp7tn2k.apps.googleusercontent.com",
+      "clientSecret": "nZ-6c7NyhIzDODfCCoi9lTHv",
+      "callbackURL": "/api/auth/google/callback"
+    }
+  },
+  "session": {
+    "secret": "homework",
+    "resave": false,
+    "saveUninitialized": false
+  },
+  "token": "secret"
 }

@@ -29,5 +29,6 @@
     "secret": "homework",
     "resave": false,
     "saveUninitialized": false
-  }
+  },
+  "token": "secret"
 }

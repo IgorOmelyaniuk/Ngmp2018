@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken';
 import user from '../config/user.json';
+import config from '../../config/config.json';
 
 export const signin = (req, res) => {
   const { username, email } = req.body;
 
   if (username === user.username && email === user.email) {
     let payload = { 'sub': user.username };
-    let token = jwt.sign(payload, 'secret', { expiresIn: 1000 });
+    let token = jwt.sign(payload, config.token, { expiresIn: 1000 });
     res.status(200).json({
       code: 200,
       message: 'OK',

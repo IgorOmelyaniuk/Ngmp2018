@@ -1,7 +1,10 @@
 import express from 'express';
-import * as Controller from '../controllers/products'; 
+import * as Controller from '../controllers/products';
+import verifyToken from '../middlewares/verifyToken';
 
 const router = express.Router();
+
+router.use(verifyToken());
 
 router.route('/')
   .get(Controller.getProducts)

@@ -6,7 +6,6 @@ const queryParser = () => (req, res, next) => {
   if (!url) return next();
 
   req.parsedQuery = stringParser(url, '&');
-  console.log(req.parsedQuery);
   return next();
 }
 

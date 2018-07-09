@@ -1,3 +1,5 @@
+import Product from '../models/product';
+
 export const getProducts = (req, res) => {
   res.send('Return all products');
 }

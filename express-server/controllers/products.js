@@ -1,15 +1,41 @@
+import db from '../config/db';
+
+const Product = db.products;
+
 export const getProducts = (req, res) => {
-  res.send('Return all products');
+  Product.findAll({}).
+    then(data => res.send({
+      message: 'Return all products',
+      data,
+    }))
+    .catch(error => res.send(`Error: ${error}`));
 }
 
 export const createProduct = (req, res) => {
-  res.send('Create new product and return it');
+  const { name, count, price, reviews } = req.body;
+
+  Product.create({ name, count, price, reviews })
+    .then(data => res.send({
+      message: 'Create new product and return it',
+      data,
+    }))
+    .catch(error => res.send(`Error: ${error}`));
 }
 
 export const getProductById = (req, res) => {
-  res.send(`Get product by id = ${req.params.id}`);
+  Product.findById(req.params.id)
+    .then(data => res.send({
+      message: `Get product by id = ${req.params.id}`,
+      data,
+    }))
+    .catch(error => res.send(`Error: ${error}`));
 }
 
 export const getReviewsForProduct = (req, res) => {
-  res.send(`Return all reviews for product by id = ${req.params.id}`);
+  Product.findById(req.params.id)
+    .then(data => res.send({
+      message: `Return all reviews for product by id = ${req.params.id}`,
+      data: data.reviews
+    }))
+    .catch(error => `Error: ${error}`);
 }

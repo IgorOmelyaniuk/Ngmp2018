@@ -1,5 +1,4 @@
 import mongoose from '../config/mongoose';
-import users from '../data/users';
 
 const Schema = mongoose.Schema;
 

@@ -1,5 +1,4 @@
 import mongoose from '../config/mongoose';
-import products from '../data/products';
 
 const Schema = mongoose.Schema;
 

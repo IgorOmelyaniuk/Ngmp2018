@@ -7,7 +7,7 @@ const CitySchema = new Schema({
     type: String,
     required: true,
   },
-  county: {
+  country: {
     type: String,
   },
   captial: {
@@ -24,6 +24,13 @@ const CitySchema = new Schema({
       default: 0
     }
   },
+  lastModifiedDate: Date,
+});
+
+CitySchema.pre('save', function(next) {
+  const date = new Date();
+  this.lastModifiedDate = date;
+  next();
 });
 
 export default mongoose.model('City', CitySchema, 'cities');

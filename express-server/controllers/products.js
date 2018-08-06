@@ -1,17 +1,49 @@
 import Product from '../models/product';
 
 export const getProducts = (req, res) => {
-  res.send('Return all products');
-}
+  Product.find({}, (err, products) => {
+    if (err) res.send(err);
+
+    res.send(products);
+  });
+};
 
 export const createProduct = (req, res) => {
-  res.send('Create new product and return it');
-}
+  const { name, count, price } = req.body;
+  const newProduct = new Product({
+    name,
+    count,
+    price,
+    reviews: '',
+  });
+
+  Product.create(newProduct, (err, product) => {
+    if (err) res.send(err);
+
+    res.send(product);
+  });
+};
 
 export const getProductById = (req, res) => {
-  res.send(`Get product by id = ${req.params.id}`);
-}
+  Product.findById(req.params.id, (err, product) => {
+    if (err) res.send(err);
+
+    res.send(product);
+  });
+};
 
 export const getReviewsForProduct = (req, res) => {
-  res.send(`Return all reviews for product by id = ${req.params.id}`);
-}
+  Product.findById(req.params.id, (err, product) => {
+    if (err) res.send(err);
+
+    res.send(product.reviews);
+  });
+};
+
+export const deleteProduct = (req, res) => {
+  Product.findByIdAndRemove(req.params.id, (err, product) => {
+    if (err) res.send(err);
+
+    res.send(product);
+  });
+};

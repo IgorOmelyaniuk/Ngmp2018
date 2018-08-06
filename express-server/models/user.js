@@ -13,7 +13,20 @@ const UserSchema = new Schema({
   email: {
     type: String,
     unique: true,
+    validate: {
+      validator(value) {
+        return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(val);
+      },
+      message: '{VALUE} is not a valid email'
+    }
   },
+  lastModifiedDate: Date,
+});
+
+UserSchema.pre('save', function(next) {
+  const date = new Date();
+  this.lastModifiedDate = date;
+  next();
 });
 
 const User = mongoose.model('User', UserSchema, 'users');

@@ -19,6 +19,13 @@ const ProductSchema = new Schema({
   reviews: {
     type: String,
   },
+  lastModifiedDate: Date,
+});
+
+ProductSchema.pre('save', function(next) {
+  const date = new Date();
+  this.lastModifiedDate = date;
+  next();
 });
 
 const Product = mongoose.model('Product', ProductSchema, 'products');

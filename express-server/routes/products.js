@@ -10,7 +10,10 @@ router.route('/')
   .get(Controller.getProducts)
   .post(Controller.createProduct);
 
-router.get('/:id', Controller.getProductById);
+router.route('/:id')
+  .get(Controller.getProductById)
+  .delete(Controller.deleteProduct);
+
 router.get('/:id/reviews', Controller.getReviewsForProduct);
 
 export default router;

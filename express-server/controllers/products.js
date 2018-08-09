@@ -1,41 +1,49 @@
-import db from '../config/db';
-
-const Product = db.products;
+import Product from '../models/product';
 
 export const getProducts = (req, res) => {
-  Product.findAll({}).
-    then(data => res.send({
-      message: 'Return all products',
-      data,
-    }))
-    .catch(error => res.send(`Error: ${error}`));
-}
+  Product.find({}, (err, products) => {
+    if (err) res.send(err);
+
+    res.send(products);
+  });
+};
 
 export const createProduct = (req, res) => {
-  const { name, count, price, reviews } = req.body;
+  const { name, count, price } = req.body;
+  const newProduct = new Product({
+    name,
+    count,
+    price,
+    reviews: '',
+  });
 
-  Product.create({ name, count, price, reviews })
-    .then(data => res.send({
-      message: 'Create new product and return it',
-      data,
-    }))
-    .catch(error => res.send(`Error: ${error}`));
-}
+  Product.create(newProduct, (err, product) => {
+    if (err) res.send(err);
+
+    res.send(product);
+  });
+};
 
 export const getProductById = (req, res) => {
-  Product.findById(req.params.id)
-    .then(data => res.send({
-      message: `Get product by id = ${req.params.id}`,
-      data,
-    }))
-    .catch(error => res.send(`Error: ${error}`));
-}
+  Product.findById(req.params.id, (err, product) => {
+    if (err) res.send(err);
+
+    res.send(product);
+  });
+};
 
 export const getReviewsForProduct = (req, res) => {
-  Product.findById(req.params.id)
-    .then(data => res.send({
-      message: `Return all reviews for product by id = ${req.params.id}`,
-      data: data.reviews
-    }))
-    .catch(error => `Error: ${error}`);
-}
+  Product.findById(req.params.id, (err, product) => {
+    if (err) res.send(err);
+
+    res.send(product.reviews);
+  });
+};
+
+export const deleteProduct = (req, res) => {
+  Product.findByIdAndRemove(req.params.id, (err, product) => {
+    if (err) res.send(err);
+
+    res.send(product);
+  });
+};

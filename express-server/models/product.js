@@ -1,14 +1,37 @@
-'use strict';
+import mongoose from '../config/mongoose';
 
-const Sequelize = require('sequelize');
+const Schema = mongoose.Schema;
 
-module.exports = (sequelize, DataTypes) => {
-  var Product = sequelize.define('Product', {
-    name: Sequelize.STRING,
-    count: Sequelize.STRING,
-    price: Sequelize.STRING,
-    reviews: Sequelize.STRING,
-  }, {});
+const ProductSchema = new Schema({
+  name: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  count: {
+    type: Number,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  reviews: {
+    type: String,
+  },
+  lastModifiedDate: Date,
+});
 
-  return Product;
-};
+ProductSchema.pre('save', function(next) {
+  const date = new Date();
+  this.lastModifiedDate = date;
+  next();
+});
+
+const Product = mongoose.model('Product', ProductSchema, 'products');
+
+// Import mock data in collection
+// Product.insertMany(products)
+//   .then(data => console.log(data, 'Products are imported from mock data'))
+//   .catch(err => console.log(err.message));
+
+export default Product;
